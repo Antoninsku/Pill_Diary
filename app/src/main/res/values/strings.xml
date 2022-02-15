@@ -3,4 +3,8 @@
     <string name="underline_text">
         <u>Create a new account!</u>.
     </string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="go_in">GO IN</string>
+    <string name="Dont_have_account">Don\'t have account?</string>
 </resources>
