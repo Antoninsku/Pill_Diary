@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="pill_diary_color">#61A6AB</color>
+    <color name="grey">#798687</color>
 </resources>
