@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Pill Diary</string>
+    <string name="underline_text">
+        <u>Create a new account!</u>.
+    </string>
 </resources>
