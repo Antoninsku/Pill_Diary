@@ -12,14 +12,22 @@ import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MedicineActivity extends AppCompatActivity {
     //Initialize and Assign Variable
     BottomNavigationView navigationView;
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicine);
+        //auth = FirebaseAuth.getInstance();
+        //auth.signOut();
         navigationView = findViewById(R.id.bottom_nav);
         //Set icon selected
         navigationView.setSelectedItemId(R.id.my_Medicine);
