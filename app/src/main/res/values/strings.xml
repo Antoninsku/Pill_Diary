@@ -11,4 +11,6 @@
     <string name="My_Medicine">My Medicine</string>
     <string name="Person">Person</string>
     <string name="Calendar">Calendar</string>
+    <string name="Current">CURRENT MEDS</string>
+    <string name="Add_new_medicine">Add new medicine</string>
 </resources>
