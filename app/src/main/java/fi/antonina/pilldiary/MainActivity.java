@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         createNewAccount.setOnClickListener(view ->
                 Toast.makeText(getApplicationContext(),"Create a new account!",Toast.LENGTH_SHORT).show());
 
-        //GOIN Button Click event, move to MainFragment lambda
+        //GO IN Button Click event, move to MainFragment lambda
         goInButton = findViewById(R.id.goInButton);
         goInButton.setOnClickListener(view -> {
             Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, MainFragment.class);
+            Intent intent = new Intent(MainActivity.this, MedicineActivity.class);
             startActivity(intent);
             });
         }

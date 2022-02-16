@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PillDiary">
         <activity
-            android:name=".MainFragment"
+            android:name=".MedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TodayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PersonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
