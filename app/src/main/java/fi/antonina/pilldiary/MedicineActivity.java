@@ -26,8 +26,8 @@ public class MedicineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicine);
-        //auth = FirebaseAuth.getInstance();
-        //auth.signOut();
+       // auth = FirebaseAuth.getInstance();
+        // auth.signOut();
         navigationView = findViewById(R.id.bottom_nav);
         //Set icon selected
         navigationView.setSelectedItemId(R.id.my_Medicine);
@@ -55,5 +55,12 @@ public class MedicineActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        auth = FirebaseAuth.getInstance();
+        auth.signOut();
+        super.onStop();
     }
 }
