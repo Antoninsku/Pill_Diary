@@ -13,4 +13,15 @@
     <string name="Calendar">Calendar</string>
     <string name="Current">CURRENT MEDS</string>
     <string name="Add_new_medicine">Add new medicine</string>
+    <string name="Med_Name_Questions">What is name of medicine?</string>
+    <string name="Med_Amount_Question">How many capsules should take per day?</string>
+    <string name="Med_Time_question">When should take medicine?</string>
+    <string name="Morning">Morning</string>
+    <string name="Evening">Evening</string>
+    <string name="After">After eating</string>
+    <string name="Before">Before eating</string>
+    <string name="Name_of_Medicine">Name of medicine</string>
+    <string name="Amount_of_Medicine">Amount of medicine</string>
+    <string name="Add">ADD</string>
+    <string name="Feedback">Feedback</string>
 </resources>

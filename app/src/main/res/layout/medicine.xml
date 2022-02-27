@@ -45,36 +45,50 @@
         android:layout_marginBottom="661dp"
         android:backgroundTint="@color/white"
         android:foregroundTint="@color/pill_diary_color"
+        android:minHeight="48dp"
         app:srcCompat="@drawable/add"
         app:tint="@color/pill_diary_color"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
         android:layout_below="@+id/textViewMyMedicine"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="38dp"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="292dp"
+        android:layout_marginEnd="268dp"
         android:layout_marginBottom="444dp"
         android:text="@string/Current"
         android:textSize="11sp" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/addMedicineButton"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginBottom="111dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="93dp"
+        android:layout_marginEnd="82dp"
+        android:layout_marginBottom="125dp"
         android:backgroundTint="@color/white"
         android:outlineSpotShadowColor="#009688"
         android:text="@string/Add_new_medicine"
-        android:textColor="@color/pill_diary_color" />
+        android:textColor="@color/pill_diary_color"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/medListView"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="134dp" />
 
 </RelativeLayout>
