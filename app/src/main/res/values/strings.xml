@@ -24,4 +24,8 @@
     <string name="Amount_of_Medicine">Amount of medicine</string>
     <string name="Add">ADD</string>
     <string name="Feedback">Feedback</string>
+    <string name="Update">UPDATE</string>
+    <string name="Feedback_hints">Feeling about medicine</string>
+    <string name="FeedbackQuestion">What do you feel?</string>
+    <string name="Edit_Medicine">Edit Current Medicine</string>
 </resources>

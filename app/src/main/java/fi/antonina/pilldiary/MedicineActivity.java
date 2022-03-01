@@ -38,7 +38,6 @@ public class MedicineActivity extends AppCompatActivity {
     ArrayList<MedicineType> medArrayList;
     MedicineType medicineType;
     MedicineAdapter medicineAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +116,6 @@ public class MedicineActivity extends AppCompatActivity {
                 });
             }
         });
-
-        // Delete button click event
     }
 
     @Override
