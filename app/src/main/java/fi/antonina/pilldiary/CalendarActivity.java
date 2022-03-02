@@ -25,7 +25,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         //Set icon selected
         navigationView.setSelectedItemId(R.id.calendar);
-        Toast.makeText(CalendarActivity.this, "Calendar", Toast.LENGTH_SHORT).show();
+
         //Perform ItemSelectedListener
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

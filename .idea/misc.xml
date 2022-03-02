@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android/PillDiary/app/src/main/res/layout/activity_medicine_add.xml" value="0.3" />
+        <entry key="..\:/android/PillDiary/app/src/main/res/layout/medicine_edit.xml" value="0.12291666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
       </map>
     </option>

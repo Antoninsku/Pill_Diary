@@ -22,7 +22,7 @@ public class PersonActivity extends AppCompatActivity {
 
         //Set icon selected
         navigationView.setSelectedItemId(R.id.person);
-        Toast.makeText(PersonActivity.this, "Personal", Toast.LENGTH_SHORT).show();
+
         //Perform ItemSelectedListener
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")

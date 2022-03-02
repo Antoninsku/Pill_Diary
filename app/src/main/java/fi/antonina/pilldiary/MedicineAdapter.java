@@ -19,12 +19,12 @@ import java.util.List;
 
 public class MedicineAdapter extends BaseAdapter {
 
-    Context context;
+    MedicineActivity context;
     int layout;
     ArrayList<MedicineType> medList;
     int position;
 
-    public MedicineAdapter(Context context, int layout, ArrayList<MedicineType> medList) {
+    public MedicineAdapter(MedicineActivity context, int layout, ArrayList<MedicineType> medList) {
         this.context = context;
         this.layout = layout;
         this.medList = medList;
@@ -89,23 +89,12 @@ public class MedicineAdapter extends BaseAdapter {
             }
         });
 
+        //Edit button click event and editButton method is called here.
         ImageButton editButton = view.findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setView(R.layout.medicine_edit);
-                EditText editTextName = view.findViewById(R.id.editTextEditName);
-                editTextName.setText(medList.get(position).getMedName());
-                EditText edittextAmount = view.findViewById(R.id.editTexEditNumber);
-                edittextAmount.setText(medList.get(position).getMedAmount());
-                EditText editTextTime = view.findViewById(R.id.editTextMedTime);
-                editTextTime.setText(medList.get(position).getMedGetTime());
-                EditText edittextFeedback = view.findViewById(R.id.editTextFeedback);
-                edittextFeedback.setText(medList.get(position).getFeedBack());
-                Button updateButton = view.findViewById(R.id.updateMedButton);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                context.editButton(position);
             }
         });
         return view;
