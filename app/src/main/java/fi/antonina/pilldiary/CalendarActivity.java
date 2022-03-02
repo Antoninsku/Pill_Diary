@@ -1,8 +1,11 @@
 package fi.antonina.pilldiary;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CalendarView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CalendarActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +47,22 @@ public class CalendarActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        CalendarView cv = findViewById(R.id.calendarView);
+        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month,
+                                            int dayOfMonth) {
+                cv.setSelectedDateVerticalBar(R.color.grey);
+
+                Intent intent = new Intent(CalendarActivity.this
+                        , TodayActivity.class);
+
+                startActivity(intent);
+            }
+
+        });
     }
+
 }

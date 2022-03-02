@@ -35,7 +35,7 @@ public class MedicineActivity extends AppCompatActivity {
     Button addNewMedicineButton;
     ImageButton deleteButton, editButton;
     ListView medListView;
-    ArrayList<MedicineType> medArrayList;
+    //ArrayList<MedicineType> medArrayList;
     MedicineType medicineType;
     MedicineAdapter medicineAdapter;
     @Override
@@ -75,8 +75,9 @@ public class MedicineActivity extends AppCompatActivity {
 
         //Add New Medicine button click event
         medListView = findViewById(R.id.medListView);
-        medArrayList = new ArrayList<>();
-        medicineAdapter = new MedicineAdapter(MedicineActivity.this,R.layout.medicineitem,medArrayList);
+      //  medArrayList = new ArrayList<>();
+      //  medicineAdapter = new MedicineAdapter(MedicineActivity.this,R.layout.medicineitem,medArrayList);
+        medicineAdapter = new MedicineAdapter(MedicineActivity.this,R.layout.medicineitem,MedicineSingleton.getInstance().getMedicine());
         medListView.setAdapter(medicineAdapter);
         addNewMedicineButton = findViewById(R.id.addMedicineButton);
         //When Add New Medicine is clicked, a dialog will appear
@@ -107,7 +108,8 @@ public class MedicineActivity extends AppCompatActivity {
                             Toast.makeText(MedicineActivity.this, "Successfully added!", Toast.LENGTH_SHORT).show();
 
                             medicineType = new MedicineType(medName,"Dont have!",medAmount,medTime);
-                            medArrayList.add(medicineType);
+                            //medArrayList.add(medicineType);
+                            MedicineSingleton.getInstance().getMedicine().add(medicineType);
                             medicineAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }

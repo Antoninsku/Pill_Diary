@@ -6,4 +6,13 @@
     tools:context=".TodayActivity">
 
 
+    <ListView
+        android:id="@+id/listMed"
+        android:layout_width="220dp"
+        android:layout_height="405dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="173dp" />
 </RelativeLayout>
