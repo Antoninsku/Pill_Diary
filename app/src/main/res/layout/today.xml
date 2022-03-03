@@ -14,5 +14,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="173dp" />
+        android:layout_marginTop="170dp" />
+
+    <CheckBox
+        android:id="@+id/medicineCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="86dp"
+        android:onClick="checked"
+        android:text="All taken " />
+
 </RelativeLayout>

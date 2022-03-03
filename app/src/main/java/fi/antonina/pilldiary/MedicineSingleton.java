@@ -3,6 +3,7 @@ package fi.antonina.pilldiary;
 import java.util.ArrayList;
 
 public class MedicineSingleton {
+    private boolean active;
     private static final MedicineSingleton ourInstance = new MedicineSingleton();
     public ArrayList<MedicineType> medArrayList = new ArrayList<>();
 
@@ -25,7 +26,6 @@ public class MedicineSingleton {
     public MedicineSingleton(){
         medArrayList = new ArrayList<>();
        // medArrayList.add(new MedicineType("Burana", "Good", "1", "Morning"));
-
     }
 
 }

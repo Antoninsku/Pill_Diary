@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/medicinsTaken"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".CalendarActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,14 +13,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/white"
-        app:menu="@menu/menu_bottom_nav"
         app:itemIconTint="@color/custom_color_bottom_nav"
-        app:itemTextColor="@color/custom_color_bottom_nav"/>
+        app:itemTextColor="@color/custom_color_bottom_nav"
+        app:menu="@menu/menu_bottom_nav" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dp"
+        android:layout_marginEnd="25dp" />
+
+    <TextView
+        android:id="@+id/hasMedicinsBeenTaken"
+        android:layout_width="130dp"
+        android:layout_height="68dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="165dp"
+        android:layout_marginBottom="96dp"
+        android:onClick="isTaken"
+        android:text="Have medicines been taken? " />
 
 </RelativeLayout>
