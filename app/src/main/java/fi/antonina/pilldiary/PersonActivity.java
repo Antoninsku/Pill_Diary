@@ -11,7 +11,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.AlertDialog;
+
+import android.content.DialogInterface;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
+
 public class PersonActivity extends AppCompatActivity {
+
+    ImageView avatar;
+    TextView title, userName, ages, male;
+    ImageButton logOut;
+    AlertDialog dialog;
+    EditText editText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +37,96 @@ public class PersonActivity extends AppCompatActivity {
 
         //Intitialize and Assign Variable
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav);
+
+        title = findViewById(R.id.title);
+        avatar = findViewById(R.id.avatar);
+        userName = findViewById(R.id.userName);
+        ages = findViewById(R.id.ages);
+        male = findViewById(R.id.male);
+
+        logOut = findViewById(R.id.logOut);
+
+        dialog = new AlertDialog.Builder(this).create();
+        editText = new EditText(this);
+
+        dialog.setView(editText);
+        //edit user name
+        userName.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                dialog.setTitle("Edit text:");
+                editText.setText(userName.getText());
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        userName.setText(String.valueOf(editText.getText()));
+                        Toast.makeText(PersonActivity.this, "changes saved successfully", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setTitle("Edit the text:");
+                dialog.show();
+                userName.setText(editText.getText().toString());
+            }
+        });
+        //edit user age
+        ages.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                editText.setText(ages.getText());
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ages.setText(String.valueOf(editText.getText()));
+                        Toast.makeText(PersonActivity.this, "changes saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dialog.setTitle("Edit the text:");
+                dialog.show();
+                ages.setText(editText.getText().toString());
+            }
+        });
+        Switch sw = (Switch) findViewById(R.id.switch1);
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    sw.setText("Male");
+                } else {
+                    sw.setText("Female");
+                }
+                Toast.makeText(PersonActivity.this, "changes saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //log out click
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(PersonActivity.this);
+                builder.setMessage("do you want to log out ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(PersonActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                onDestroy();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.setTitle("Please Confirm");
+                alert.show();
+            }
+        });
 
         //Set icon selected
         navigationView.setSelectedItemId(R.id.person);
@@ -46,4 +154,5 @@ public class PersonActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/android/PillDiary/app/src/main/res/layout/activity_medicine_add.xml" value="0.3" />
-        <entry key="..\:/android/PillDiary/app/src/main/res/layout/medicine_edit.xml" value="0.12291666666666666" />
         <entry key="..\:/Users/juvon/OneDrive/Tiedostot/GitHub/Pill_Diary/app/src/main/res/layout/activity_main.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/juvon/OneDrive/Tiedostot/GitHub/Pill_Diary/app/src/main/res/layout/activity_medicine_add.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/juvon/OneDrive/Tiedostot/GitHub/Pill_Diary/app/src/main/res/layout/calendar.xml" value="0.16666666666666666" />
@@ -15,6 +13,10 @@
         <entry key="..\:/android/PillDiary/app/src/main/res/drawable/buttonradius.xml" value="0.142" />
         <entry key="..\:/android/PillDiary/app/src/main/res/drawable/ic_launcher_background.xml" value="0.142" />
         <entry key="..\:/android/PillDiary/app/src/main/res/layout/activity_main.xml" value="0.3" />
+        <entry key="..\:/android/PillDiary/app/src/main/res/layout/activity_medicine_add.xml" value="0.3" />
+        <entry key="..\:/android/PillDiary/app/src/main/res/layout/medicine_edit.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/drawable/calendar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/person.xml" value="0.1" />
       </map>
     </option>
   </component>
