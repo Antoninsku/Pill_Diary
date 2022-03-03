@@ -23,7 +23,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 public class PersonActivity extends AppCompatActivity {
-
+    //initialize variable
     ImageView avatar;
     TextView title, userName, ages, male;
     ImageButton logOut;
