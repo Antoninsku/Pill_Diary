@@ -1,14 +1,10 @@
 package fi.antonina.pilldiary;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +13,25 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MedicineActivity extends AppCompatActivity {
+
     //Initialize and Assign Variable
     BottomNavigationView navigationView;
     FirebaseAuth auth;
@@ -36,12 +42,18 @@ public class MedicineActivity extends AppCompatActivity {
     ArrayList<MedicineType> medArrayList;
     MedicineType medicineType;
     MedicineAdapter medicineAdapter;
+    long counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicine);
-        // auth = FirebaseAuth.getInstance();
-        // auth.signOut();
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        users = db.getReference("Users").child(auth.getUid());
+
+
         navigationView = findViewById(R.id.bottom_nav);
 
         //Set icon selected
@@ -56,8 +68,7 @@ public class MedicineActivity extends AppCompatActivity {
                 if (itemId == R.id.my_Medicine) {
                     return true;
                 } else if (itemId == R.id.person) {
-                    startActivity(new Intent(getApplicationContext()
-                            , PersonActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PersonActivity.class));
                     overridePendingTransition(0, 0);
                     return true;
                 } else if (itemId == R.id.calendar) {
@@ -73,7 +84,7 @@ public class MedicineActivity extends AppCompatActivity {
         //"Add New Medicine" button click event
         medListView = findViewById(R.id.medListView);
         medArrayList = new ArrayList<>();
-        medicineAdapter = new MedicineAdapter(MedicineActivity.this,R.layout.medicineitem,MedicineSingleton.getInstance().getMedicine());
+        medicineAdapter = new MedicineAdapter(MedicineActivity.this, R.layout.medicineitem, medArrayList);
         medListView.setAdapter(medicineAdapter);
         addNewMedicineButton = findViewById(R.id.addMedicineButton);
         //When Add New Medicine is clicked, a dialog will appear
@@ -81,7 +92,7 @@ public class MedicineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MedicineActivity.this);
-                View v2 = getLayoutInflater().inflate(R.layout.activity_medicine_add,null);
+                View v2 = getLayoutInflater().inflate(R.layout.activity_medicine_add, null);
 
                 final EditText medNameEditText = v2.findViewById(R.id.editTextGetMedName);
                 final EditText medAmountEditText = v2.findViewById(R.id.editTextMedNumber);
@@ -99,30 +110,80 @@ public class MedicineActivity extends AppCompatActivity {
                         String medAmount = medAmountEditText.getText().toString();
                         String medTime = medTimeEditText.getText().toString();
 
-                        if(medName.isEmpty() || medAmount.isEmpty() || medTime.isEmpty()){
+
+                        if (medName.isEmpty() || medAmount.isEmpty() || medTime.isEmpty()) {
                             Toast.makeText(MedicineActivity.this, "Please fill information!", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             Toast.makeText(MedicineActivity.this, "Successfully added!", Toast.LENGTH_SHORT).show();
 
-                            medicineType = new MedicineType(medName,"Dont have feedback!",medAmount,medTime);
+                            users.child("list").child((counter + 1) + "").setValue(new MedicineType(medName, "Dont have feedback!", medAmount, medTime)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(MedicineActivity.this, "Successfully added!", Toast.LENGTH_SHORT).show();
+                                        medicineAdapter.notifyDataSetChanged();
+                                        dialog.dismiss();
+                                        users.child("counter").setValue(counter+1);
+                                    }
+                                }
+                            }).addOnFailureListener(e ->
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+
+                            //medicineType = new MedicineType(medName,"Dont have feedback!",medAmount,medTime);
                             // medArraylist is used for editButton method
-                            medArrayList.add(medicineType);
-                            MedicineSingleton.getInstance().getMedicine().add(medicineType);
+                            //medArrayList.add(medicineType);
+                            //MedicineSingleton.getInstance().getMedicine().add(medicineType);
                             // Set listview appear with medicineType item
-                            medicineAdapter.notifyDataSetChanged();
-                            dialog.dismiss();
                         }
                     }
                 });
             }
         });
+
+
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
+
+                    counter = (long) dataSnapshot.child("counter").getValue(Integer.class);
+                    Log.d("planeta", "onDataChange: " + counter);
+
+
+
+                }
+
+                if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
+                    medArrayList.clear();
+                    for(DataSnapshot ds : dataSnapshot.child("list").getChildren()) {
+                        String name =ds.child("medName").getValue(String.class);
+                        String amount = ds.child("medAmount").getValue(String.class);
+                        String time = ds.child("medGetTime").getValue(String.class);
+                        String feedback = ds.child("feedBack").getValue(String.class);
+                        medArrayList.add(new MedicineType(name, feedback, amount, time));
+                        Log.d("planeta", "onDataChange: " + name);
+
+                    }
+                }
+
+                medicineAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("planeta", "onDataChange: " + databaseError.getMessage());
+            }
+        };
+        users.addValueEventListener(postListener);
     }
 
     // Create editButton method
-    public void editButton(final int position){
+    public void editButton(final int position) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MedicineActivity.this);
-        View dialog = LayoutInflater.from(MedicineActivity.this).inflate(R.layout.medicine_edit,null);
+        View dialog = LayoutInflater.from(MedicineActivity.this).inflate(R.layout.medicine_edit, null);
 
         final EditText editTextName = dialog.findViewById(R.id.editTextEditName);
         editTextName.setText(medArrayList.get(position).getMedName());
@@ -156,10 +217,9 @@ public class MedicineActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onStop() {
-        auth = FirebaseAuth.getInstance();
-        auth.signOut();
         super.onStop();
     }
 }

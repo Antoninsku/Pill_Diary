@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
+        Log.d("planeta", "onCreate: "+auth.getUid());
         if (auth.getUid() != null) {
             Intent intent = new Intent(MainActivity.this, MedicineActivity.class);
             startActivity(intent);
