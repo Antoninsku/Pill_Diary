@@ -11,11 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="69dp"
         app:itemBackground="@color/white"
-        app:menu="@menu/menu_bottom_nav"
         app:itemIconTint="@color/custom_color_bottom_nav"
         app:itemTextColor="@color/custom_color_bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logOut"
+        app:menu="@menu/menu_bottom_nav"
         tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

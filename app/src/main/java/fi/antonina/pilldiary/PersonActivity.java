@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -45,8 +46,8 @@ public class PersonActivity extends AppCompatActivity {
         male = findViewById(R.id.male);
 
         logOut = findViewById(R.id.logOut);
-
-        dialog = new AlertDialog.Builder(this).create();
+//        Base_Theme_AppCompat_Dialog_MinWidth
+        dialog = new AlertDialog.Builder(this, com.google.android.material.R.style.Base_V21_Theme_AppCompat_Dialog).create();
         editText = new EditText(this);
 
         dialog.setView(editText);
@@ -111,9 +112,10 @@ public class PersonActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+//                                onDestroy();
                                 Intent intent = new Intent(PersonActivity.this, MainActivity.class);
                                 startActivity(intent);
-                                onDestroy();
+                                FirebaseAuth.getInstance().signOut();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

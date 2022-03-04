@@ -146,12 +146,8 @@ public class MedicineActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
-
                     counter = (long) dataSnapshot.child("counter").getValue(Integer.class);
                     Log.d("planeta", "onDataChange: " + counter);
-
-
-
                 }
 
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
@@ -163,14 +159,10 @@ public class MedicineActivity extends AppCompatActivity {
                         String feedback = ds.child("feedBack").getValue(String.class);
                         medArrayList.add(new MedicineType(name, feedback, amount, time));
                         Log.d("planeta", "onDataChange: " + name);
-
                     }
                 }
-
                 medicineAdapter.notifyDataSetChanged();
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d("planeta", "onDataChange: " + databaseError.getMessage());
@@ -215,9 +207,7 @@ public class MedicineActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
     }
-
     @Override
     protected void onStop() {
         super.onStop();
