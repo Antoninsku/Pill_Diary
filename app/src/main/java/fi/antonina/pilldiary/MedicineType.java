@@ -7,12 +7,14 @@ public class MedicineType implements Serializable {
     private String feedBack;
     private String medAmount;
     private String medGetTime;
+    private String index;
 
-    public MedicineType(String medName, String feedBack, String medAmount, String medGetTime) {
+    public MedicineType(String medName, String feedBack, String medAmount, String medGetTime, String index) {
         this.medName = medName;
         this.feedBack = feedBack;
         this.medAmount = medAmount;
         this.medGetTime = medGetTime;
+        this.index = index;
     }
     public String getMedName() {
         return medName;
@@ -44,5 +46,14 @@ public class MedicineType implements Serializable {
 
     public void setMedGetTime(String medGetTime) {
         this.medGetTime = medGetTime;
+    }
+
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }

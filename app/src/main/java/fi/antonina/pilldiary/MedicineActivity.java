@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
@@ -84,7 +85,9 @@ public class MedicineActivity extends AppCompatActivity {
         //"Add New Medicine" button click event
         medListView = findViewById(R.id.medListView);
         medArrayList = new ArrayList<>();
-        medicineAdapter = new MedicineAdapter(MedicineActivity.this, R.layout.medicineitem, medArrayList);
+
+        medicineAdapter = new MedicineAdapter(MedicineActivity.this, R.layout.medicineitem, medArrayList, users);
+
         medListView.setAdapter(medicineAdapter);
         addNewMedicineButton = findViewById(R.id.addMedicineButton);
         //When Add New Medicine is clicked, a dialog will appear
@@ -116,7 +119,7 @@ public class MedicineActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(MedicineActivity.this, "Successfully added!", Toast.LENGTH_SHORT).show();
 
-                            users.child("list").child((counter + 1) + "").setValue(new MedicineType(medName, "Dont have feedback!", medAmount, medTime)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            users.child("list").child((counter + 1) + "").setValue(new MedicineType(medName, "Dont have feedback!", medAmount, medTime, (counter + 1) + "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
@@ -146,8 +149,12 @@ public class MedicineActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
+
                     counter = (long) dataSnapshot.child("counter").getValue(Integer.class);
                     Log.d("planeta", "onDataChange: " + counter);
+
+
+
                 }
 
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
@@ -157,12 +164,17 @@ public class MedicineActivity extends AppCompatActivity {
                         String amount = ds.child("medAmount").getValue(String.class);
                         String time = ds.child("medGetTime").getValue(String.class);
                         String feedback = ds.child("feedBack").getValue(String.class);
-                        medArrayList.add(new MedicineType(name, feedback, amount, time));
+                        String index = ds.child("index").getValue(String.class);
+                        medArrayList.add(new MedicineType(name, feedback, amount, time, index));
                         Log.d("planeta", "onDataChange: " + name);
+
                     }
                 }
+
                 medicineAdapter.notifyDataSetChanged();
+
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d("planeta", "onDataChange: " + databaseError.getMessage());
@@ -185,6 +197,8 @@ public class MedicineActivity extends AppCompatActivity {
         editTextTime.setText(medArrayList.get(position).getMedGetTime());
         final EditText edittextFeedback = dialog.findViewById(R.id.editTextFeedback);
         edittextFeedback.setText(medArrayList.get(position).getFeedBack());
+        String index = medArrayList.get(position).getIndex();
+
         Button updateButton = dialog.findViewById(R.id.updateMedButton);
 
         builder.setView(dialog);
@@ -198,16 +212,26 @@ public class MedicineActivity extends AppCompatActivity {
                 final String amount = edittextAmount.getText().toString().trim();
                 final String time = editTextTime.getText().toString().trim();
                 final String feedback = edittextFeedback.getText().toString().trim();
-                medicineType.setMedName(name);
-                medicineType.setMedAmount(amount);
-                medicineType.setMedGetTime(time);
-                medicineType.setFeedBack(feedback);
-                medicineAdapter.notifyDataSetChanged();
-                medListView.setAdapter(medicineAdapter);
+
+                users.child("list").child(index).setValue(new MedicineType(name, feedback, amount, time, index)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            medicineAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("planeta", "onFailure: "+e.getMessage());
+                    }
+                });
                 alertDialog.dismiss();
             }
         });
+
     }
+
     @Override
     protected void onStop() {
         super.onStop();
