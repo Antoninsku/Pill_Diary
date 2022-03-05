@@ -1,20 +1,10 @@
 package fi.antonina.pilldiary;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-
-import androidx.appcompat.app.AlertDialog;
-
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -22,6 +12,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class PersonActivity extends AppCompatActivity {
     //initialize variable
@@ -142,6 +140,7 @@ public class PersonActivity extends AppCompatActivity {
                 if (itemId == R.id.my_Medicine) {
                     startActivity(new Intent(getApplicationContext()
                             , MedicineActivity.class));
+                    PersonActivity.this.finish();
                     overridePendingTransition(0, 0);
                     return true;
                 } else if (itemId == R.id.person) {
@@ -149,6 +148,7 @@ public class PersonActivity extends AppCompatActivity {
                 } else if (itemId == R.id.calendar) {
                     startActivity(new Intent(getApplicationContext()
                             , CalendarActivity.class));
+                    PersonActivity.this.finish();
                     overridePendingTransition(0, 0);
                     return true;
                 }

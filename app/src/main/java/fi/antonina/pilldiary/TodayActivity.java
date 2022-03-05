@@ -1,97 +1,115 @@
 package fi.antonina.pilldiary;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class TodayActivity extends AppCompatActivity {
 
-    ListView lv;
-    CheckBox cb;
-    boolean taken;
+    String datePicked = "";
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
 
+    ListView medListView;
+    ArrayList<MedicineType> medArrayList;
+    MedicineType medicineType;
+    TodayAdapter medicineAdapter;
+    TextView all_taken;
+    long counter = 0, counter2 = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.today);
 
-        cb = findViewById(R.id.medicineCheck);
-        lv = findViewById(R.id.listMed);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            datePicked = extras.getString("datePicked");
+            counter2 = extras.getInt("counter");
+        }
 
-        lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, MedicineSingleton.getInstance().getMedNames()));
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        users = db.getReference("Users").child(auth.getUid());
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        medListView = findViewById(R.id.listMed);
+        medArrayList = new ArrayList<>();
+        medicineAdapter = new TodayAdapter(TodayActivity.this, R.layout.today_item, medArrayList, users);
+        medListView.setAdapter(medicineAdapter);
+        all_taken = findViewById(R.id.all_taken);
+
+        all_taken.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.i("DBG", "Alkio " + id + " valittu");
-                CheckedTextView v = (CheckedTextView) view;
-                v.setChecked(!v.isChecked());
-                boolean currentCheck;
+            public void onClick(View view) {
 
-                if(v.isChecked()){
-                    currentCheck = true;
-                }else
-                    currentCheck = false;
-
-                cb.setOnClickListener(new View.OnClickListener() {
+                users.child("dates").child(datePicked).setValue(datePicked).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(TodayActivity.this
-                                , CalendarActivity.class);
-                     /*   if (v.isChecked())
-                            intent.putExtra("value", "All medicins have been taken");
-                        else
-                            intent.putExtra("value", " Not all medicins have been taken");
-                     */ //Kumpikin tapa ok
-                        if(currentCheck)
-                            intent.putExtra("value", "All medicins have been taken");
-                        else
-                            intent.putExtra("value", " Not all medicins have been taken");
-
-                        startActivity(intent);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            users.child("counterdate").setValue(counter2);
+                            TodayActivity.this.finish();
+                        }
                     }
                 });
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
+
             }
         });
 
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
+                    counter = (long) dataSnapshot.child("counter").getValue(Integer.class);
+                    Log.d("planeta", "onDataChange: " + counter);
+                }
+                if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
+                    medArrayList.clear();
+                    for(DataSnapshot ds : dataSnapshot.child("list").getChildren()) {
+                        String name =ds.child("medName").getValue(String.class);
+                        String amount = ds.child("medAmount").getValue(String.class);
+                        String time = ds.child("medGetTime").getValue(String.class);
+                        String feedback = ds.child("feedBack").getValue(String.class);
+                        String index = ds.child("index").getValue(String.class);
+                        medArrayList.add(new MedicineType(name, feedback, amount, time, index));
+                        Log.d("planeta", "onDataChange: " + name);
+
+                    }
+                }
+                medicineAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("planeta", "onDataChange: " + databaseError.getMessage());
+            }
+        };
+        users.addValueEventListener(postListener);
+
+
+
+
+
     }
-
-   public void checked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.medicineCheck:
-                if (checked)
-                    taken = true;
-                else
-                    taken = false;
-
-                Toast.makeText(getApplicationContext(),
-                        "Medicins taken " + taken, Toast.LENGTH_LONG)
-                        .show();
-
-                break;
-        }
-    }
-  /*public boolean otettu (){
-       return taken;
-    }
-
-*/
 }
 
 

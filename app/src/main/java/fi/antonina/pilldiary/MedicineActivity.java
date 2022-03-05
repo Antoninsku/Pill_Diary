@@ -10,8 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,10 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 public class MedicineActivity extends AppCompatActivity {
 
     //Initialize and Assign Variable
@@ -44,17 +45,30 @@ public class MedicineActivity extends AppCompatActivity {
     MedicineType medicineType;
     MedicineAdapter medicineAdapter;
     long counter = 0;
-
+    ImageView addButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicine);
+
         FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users").child(auth.getUid());
 
 
+
+        addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+
+                Intent intent = new Intent(MedicineActivity.this, MainActivity.class);
+                startActivity(intent);
+                MedicineActivity.this.finish();
+            }
+        });
         navigationView = findViewById(R.id.bottom_nav);
 
         //Set icon selected
@@ -70,11 +84,13 @@ public class MedicineActivity extends AppCompatActivity {
                     return true;
                 } else if (itemId == R.id.person) {
                     startActivity(new Intent(getApplicationContext(), PersonActivity.class));
+                    MedicineActivity.this.finish();
                     overridePendingTransition(0, 0);
                     return true;
                 } else if (itemId == R.id.calendar) {
                     startActivity(new Intent(getApplicationContext()
                             , CalendarActivity.class));
+                    MedicineActivity.this.finish();
                     overridePendingTransition(0, 0);
                     return true;
                 }
