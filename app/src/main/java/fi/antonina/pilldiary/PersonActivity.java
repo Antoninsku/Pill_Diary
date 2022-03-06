@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -21,10 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Locale;
+
 public class PersonActivity extends AppCompatActivity {
     //initialize variable
     ImageView avatar;
-    TextView title, userName, ages, male;
+    TextView title, userName, userAge, male;
     ImageButton logOut;
     AlertDialog dialog;
     EditText editText;
@@ -40,11 +43,9 @@ public class PersonActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         avatar = findViewById(R.id.avatar);
         userName = findViewById(R.id.userName);
-        ages = findViewById(R.id.ages);
+        userAge = findViewById(R.id.ages);
         male = findViewById(R.id.male);
-
         logOut = findViewById(R.id.logOut);
-//        Base_Theme_AppCompat_Dialog_MinWidth
         dialog = new AlertDialog.Builder(this, com.google.android.material.R.style.Base_V21_Theme_AppCompat_Dialog).create();
         editText = new EditText(this);
 
@@ -54,37 +55,15 @@ public class PersonActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                dialog.setTitle("Edit text:");
-                editText.setText(userName.getText());
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        userName.setText(String.valueOf(editText.getText()));
-                        Toast.makeText(PersonActivity.this, "changes saved successfully", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                dialog.setTitle("Edit the text:");
-                dialog.show();
-                userName.setText(editText.getText().toString());
+                showNameWindow();
             }
         });
         //edit user age
-        ages.setOnClickListener(new View.OnClickListener() {
+        userAge.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                editText.setText(ages.getText());
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ages.setText(String.valueOf(editText.getText()));
-                        Toast.makeText(PersonActivity.this, "changes saved", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                dialog.setTitle("Edit the text:");
-                dialog.show();
-                ages.setText(editText.getText().toString());
+                showAgeWindow();
             }
         });
         Switch sw = (Switch) findViewById(R.id.switch1);
@@ -155,6 +134,61 @@ public class PersonActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    public void showNameWindow(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
+
+        //created object
+        LayoutInflater inflater = LayoutInflater.from(PersonActivity.this);
+        View name_window = inflater.inflate(R.layout.personal_name, null);
+        //as register window new layout
+        dialog.setView(name_window);
+
+        EditText name = name_window.findViewById(R.id.name);
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                userName.setText(userName.getText().toString());
+                dialogInterface.cancel();
+            }
+        }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String newName = name.getText().toString().toUpperCase(Locale.ROOT);
+                userName.setText(newName);
+                dialogInterface.cancel();
+            }
+        });
+        dialog.show();
+    }
+    public void showAgeWindow(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
+
+        //created object
+        LayoutInflater inflater = LayoutInflater.from(PersonActivity.this);
+        View age_window = inflater.inflate(R.layout.personal_age, null);
+        //as register window new layout
+        dialog.setView(age_window);
+
+        EditText age = age_window.findViewById(R.id.age);
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                userAge.setText(userAge.getText().toString());
+                dialogInterface.cancel();
+            }
+        }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String newAge = age.getText().toString().toUpperCase(Locale.ROOT);
+                Toast.makeText(PersonActivity.this, newAge, Toast.LENGTH_SHORT).show();
+                userAge.setText(newAge);
+                dialogInterface.cancel();
+            }
+        });
+        dialog.show();
     }
 
 }
