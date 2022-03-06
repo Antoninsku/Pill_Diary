@@ -25,7 +25,6 @@ public class MedicineSingleton {
 
     public MedicineSingleton(){
         medArrayList = new ArrayList<>();
-       // medArrayList.add(new MedicineType("Burana", "Good", "1", "Morning"));
     }
 
 }
