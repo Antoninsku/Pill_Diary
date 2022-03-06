@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,7 +28,6 @@ public class MedicineAdapter extends BaseAdapter {
     MedicineActivity context;
     int layout;
     ArrayList<MedicineType> medList;
-    int position;
     DatabaseReference users;
 
     public MedicineAdapter(MedicineActivity context, int layout, ArrayList<MedicineType> medList, DatabaseReference users) {
@@ -61,50 +63,18 @@ public class MedicineAdapter extends BaseAdapter {
         TextView medTime = view.findViewById(R.id.medTime);
         TextView medFeedback = view.findViewById(R.id.medFeedback);
 
-        String index = medList.get(i).getIndex();
-
         medName.setText(medList.get(i).getMedName());
         medCapsule.setText(medList.get(i).getMedAmount());
         medTime.setText(medList.get(i).getMedGetTime());
         medFeedback.setText(medList.get(i).getFeedBack());
 
-        // get position of item by i
 
         // Delete button click event
         ImageButton deleteButton = view.findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Do you want to remove this medicine?");
-                builder.setCancelable(true);
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        users.child("list").child(index).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                dataSnapshot.getRef().removeValue();
-                                notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.d("planeta", "onCancelled: " + error.getMessage());
-                            }
-                        });
-
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                context.deleteButton(i);
             }
         });
 

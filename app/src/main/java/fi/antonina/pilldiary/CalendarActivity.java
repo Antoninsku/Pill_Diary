@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,7 @@ public class CalendarActivity extends AppCompatActivity {
     final String DATE_FORMAT = "dd-MM-yyyy";
     int pink = 0;
     MaterialCalendarView calendarView;
+    Button remiderButton;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
@@ -139,6 +142,15 @@ public class CalendarActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        remiderButton = findViewById(R.id.remiderButton);
+        remiderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this, RemiderActivity.class);
+                CalendarActivity.this.startActivity(intent);
             }
         });
     }

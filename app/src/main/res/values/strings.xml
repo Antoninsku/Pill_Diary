@@ -28,4 +28,13 @@
     <string name="Feedback_hints">Feeling about medicine</string>
     <string name="FeedbackQuestion">What do you feel?</string>
     <string name="Edit_Medicine">Edit Current Medicine</string>
+    <string name="New_Remider">New Remider</string>
+    <string name="Enter_your_messeage">Enter your message</string>
+    <string name="set">SET</string>
+    <string name="cancle">CANCLE</string>
+    <string name="Personal_Information">Personal Information</string>
+    <string name="user_name">USERNAME</string>
+    <string name="years_old">year(s) old</string>
+    <string name="Click_on_text">Click on text to edit it</string>
+    <string name="Set_reminder">SET REMINDER</string>
 </resources>

@@ -1,8 +1,13 @@
 package fi.antonina.pilldiary;
 
+import static fi.antonina.pilldiary.R.drawable.dialog_background_custom;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,9 +48,9 @@ public class MedicineActivity extends AppCompatActivity {
     Button addNewMedicineButton;
     ListView medListView;
     ArrayList<MedicineType> medArrayList;
-    MedicineType medicineType;
     MedicineAdapter medicineAdapter;
     long counter = 0;
+    String i;
     ImageView addButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,6 @@ public class MedicineActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users").child(auth.getUid());
-
 
 
         addButton = findViewById(R.id.addButton);
@@ -98,14 +103,13 @@ public class MedicineActivity extends AppCompatActivity {
             }
         });
 
-        //"Add New Medicine" button click event
+
         medListView = findViewById(R.id.medListView);
         medArrayList = new ArrayList<>();
-
         medicineAdapter = new MedicineAdapter(MedicineActivity.this, R.layout.medicineitem, medArrayList, users);
-
         medListView.setAdapter(medicineAdapter);
         addNewMedicineButton = findViewById(R.id.addMedicineButton);
+
         //When Add New Medicine is clicked, a dialog will appear
         addNewMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +124,7 @@ public class MedicineActivity extends AppCompatActivity {
 
                 builder.setView(v2);
                 final Dialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
                 addButton.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +140,7 @@ public class MedicineActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(MedicineActivity.this, "Successfully added!", Toast.LENGTH_SHORT).show();
 
+                            // Write (set) data to Firebase
                             users.child("list").child((counter + 1) + "").setValue(new MedicineType(medName, "Dont have feedback!", medAmount, medTime, (counter + 1) + "")).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -147,30 +153,21 @@ public class MedicineActivity extends AppCompatActivity {
                                 }
                             }).addOnFailureListener(e ->
                                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-
-                            //medicineType = new MedicineType(medName,"Dont have feedback!",medAmount,medTime);
-                            // medArraylist is used for editButton method
-                            //medArrayList.add(medicineType);
-                            //MedicineSingleton.getInstance().getMedicine().add(medicineType);
-                            // Set listview appear with medicineType item
                         }
                     }
                 });
             }
         });
 
-
-
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //Read (get) data from Firebase
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
 
                     counter = (long) dataSnapshot.child("counter").getValue(Integer.class);
                     Log.d("planeta", "onDataChange: " + counter);
-
-
-
                 }
 
                 if(dataSnapshot.child("counter").getValue(Integer.class)!=null){
@@ -183,12 +180,9 @@ public class MedicineActivity extends AppCompatActivity {
                         String index = ds.child("index").getValue(String.class);
                         medArrayList.add(new MedicineType(name, feedback, amount, time, index));
                         Log.d("planeta", "onDataChange: " + name);
-
                     }
                 }
-
                 medicineAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -197,6 +191,35 @@ public class MedicineActivity extends AppCompatActivity {
             }
         };
         users.addValueEventListener(postListener);
+    }
+
+    // Delete button onclick method
+    public void deleteButton(final int position){
+        String index = medArrayList.get(position).getIndex();
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MedicineActivity.this);
+        builder.setMessage("Do you want to remove this medicine?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                users.child("list").child(index).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(MedicineActivity.this, "Delete Successfully!", Toast.LENGTH_SHORT).show();
+                                medicineAdapter.notifyDataSetChanged();
+                            }
+                        });
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        android.app.AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // Create editButton method
@@ -219,6 +242,7 @@ public class MedicineActivity extends AppCompatActivity {
 
         builder.setView(dialog);
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +269,6 @@ public class MedicineActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
     }
 
     @Override
