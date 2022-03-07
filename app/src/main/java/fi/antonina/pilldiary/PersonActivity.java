@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +45,7 @@ public class PersonActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person);
 
@@ -88,6 +90,7 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showNameWindow();
+
             }
         });
         //edit user age
@@ -96,8 +99,10 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 showAgeWindow();
+
             }
         });
+
         Switch sw = (Switch) findViewById(R.id.switch1);
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -108,7 +113,6 @@ public class PersonActivity extends AppCompatActivity {
                 } else {
                     sw.setText("Female");
                 }
-                Toast.makeText(PersonActivity.this, "changes saved", Toast.LENGTH_SHORT).show();
             }
         });
         //log out click
@@ -139,6 +143,7 @@ public class PersonActivity extends AppCompatActivity {
             }
         });
 
+
         //Set icon selected
         navigationView.setSelectedItemId(R.id.person);
 
@@ -166,7 +171,10 @@ public class PersonActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
+
+
     public void showNameWindow(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
 
@@ -187,13 +195,17 @@ public class PersonActivity extends AppCompatActivity {
         }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String newName = name.getText().toString().trim();
-                userName.setText(newName.toUpperCase());
+              //  Kaksi alempaa riviä vanha koodi
+                 String newName = name.getText().toString().trim();
+                 userName.setText(newName.toUpperCase());
+                 users.child("name").setValue(userName.getText().toString()) ;
+                 Toast.makeText(PersonActivity.this, "This data has been updated", Toast.LENGTH_SHORT).show();
 
             }
         });
         dialog.show();
     }
+
     public void showAgeWindow(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
 
@@ -215,12 +227,19 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String newAge = age.getText().toString().toUpperCase(Locale.ROOT);
-                Toast.makeText(PersonActivity.this, newAge, Toast.LENGTH_SHORT).show();
                 userAge.setText(newAge);
-                dialogInterface.cancel();
+                //mitä tarkoittaa
+              //  dialogInterface.cancel();
+                Toast.makeText(PersonActivity.this, "This data has been updated", Toast.LENGTH_SHORT).show();
+
+                users.child("age").setValue(userAge.getText().toString());
+
             }
         });
         dialog.show();
+
     }
 
 }
+
+
