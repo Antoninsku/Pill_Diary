@@ -140,11 +140,11 @@ public class PersonActivity extends AppCompatActivity {
 
         //created object
         LayoutInflater inflater = LayoutInflater.from(PersonActivity.this);
-        View name_window = inflater.inflate(R.layout.person, null);
+        View name_window = inflater.inflate(R.layout.personal_name, null);
         //as register window new layout
         dialog.setView(name_window);
 
-        EditText name = name_window.findViewById(R.id.userName);
+        EditText name = name_window.findViewById(R.id.name);
 
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -171,7 +171,7 @@ public class PersonActivity extends AppCompatActivity {
         //as register window new layout
         dialog.setView(age_window);
 
-        EditText age = age_window.findViewById(R.id.ages);
+        EditText age = age_window.findViewById(R.id.age);
 
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

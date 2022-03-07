@@ -49,7 +49,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_exit_to_app_24"
         app:tint="@color/pill_diary_color"
-        tools:ignore="ContentDescription"
+        tools:ignore="ContentDescription,MissingConstraints"
         tools:layout_editor_absoluteX="331dp" />
 
     <TextView
