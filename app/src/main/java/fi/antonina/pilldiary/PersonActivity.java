@@ -20,22 +20,38 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
 public class PersonActivity extends AppCompatActivity {
     //initialize variable
     ImageView avatar;
-    TextView title, userName, userAge, male;
+    TextView title, userName, userAge, male, email;
     ImageButton logOut;
     AlertDialog dialog;
-    EditText editText;
+
+    //Anh
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person);
+
+        //Anh
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        users = db.getReference("Users").child(auth.getUid());
 
         //Intitialize and Assign Variable
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav);
@@ -43,12 +59,27 @@ public class PersonActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         avatar = findViewById(R.id.avatar);
         userName = findViewById(R.id.userName);
+        email = findViewById(R.id.email);
         userAge = findViewById(R.id.ages);
         male = findViewById(R.id.male);
         logOut = findViewById(R.id.logOut);
         dialog = new AlertDialog.Builder(this, com.google.android.material.R.style.Base_V21_Theme_AppCompat_Dialog).create();
-        editText = new EditText(this);
+        EditText editText = new EditText(this);
 
+        users.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                userName.setText(user.getName().toUpperCase());
+                email.setText(user.getEmail());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         dialog.setView(editText);
         //edit user name
         userName.setOnClickListener(new View.OnClickListener() {
@@ -155,9 +186,9 @@ public class PersonActivity extends AppCompatActivity {
         }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String newName = name.getText().toString().toUpperCase(Locale.ROOT);
-                userName.setText(newName);
-                dialogInterface.cancel();
+                String newName = name.getText().toString().trim();
+                userName.setText(newName.toUpperCase());
+
             }
         });
         dialog.show();

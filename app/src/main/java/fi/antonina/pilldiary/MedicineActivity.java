@@ -51,7 +51,7 @@ public class MedicineActivity extends AppCompatActivity {
     MedicineAdapter medicineAdapter;
     long counter = 0;
     String i;
-    ImageView addButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,17 +63,6 @@ public class MedicineActivity extends AppCompatActivity {
         users = db.getReference("Users").child(auth.getUid());
 
 
-        addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                auth.signOut();
-
-                Intent intent = new Intent(MedicineActivity.this, MainActivity.class);
-                startActivity(intent);
-                MedicineActivity.this.finish();
-            }
-        });
         navigationView = findViewById(R.id.bottom_nav);
 
         //Set icon selected
