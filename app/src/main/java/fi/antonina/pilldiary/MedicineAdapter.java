@@ -23,6 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
+
 public class MedicineAdapter extends BaseAdapter {
 
     MedicineActivity context;
