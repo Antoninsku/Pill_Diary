@@ -72,6 +72,7 @@ public class PersonActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 userName.setText(user.getName().toUpperCase());
                 email.setText(user.getEmail());
+                userAge.setText(user.getAge());
 
             }
 
@@ -93,7 +94,7 @@ public class PersonActivity extends AppCompatActivity {
         userAge.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 showAgeWindow();
             }
         });

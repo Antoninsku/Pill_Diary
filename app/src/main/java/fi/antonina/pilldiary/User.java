@@ -1,15 +1,15 @@
 package fi.antonina.pilldiary;
 
 public class User {
-    private String name, email, pass, phone;
+    private String name, email, pass, age;
 
     public User() {}
 
-    public User(String name, String email, String pass, String phone) {
+    public User(String name, String email, String pass, String age) {
         this.name = name;
         this.email = email;
         this.pass = pass;
-        this.phone = phone;
+        this.age = age;
     }
 
     public String getName() {
@@ -36,11 +36,11 @@ public class User {
         this.pass = pass;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getAge() {
+        return age;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAge(String age) {
+        this.age = age;
     }
 }

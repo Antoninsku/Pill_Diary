@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         final MaterialEditText email = register_window.findViewById(R.id.emailField);
         final MaterialEditText pass = register_window.findViewById(R.id.passField);
         final MaterialEditText name = register_window.findViewById(R.id.nameField);
-        final MaterialEditText phone = register_window.findViewById(R.id.phoneField);
+        final MaterialEditText age = register_window.findViewById(R.id.ageField);
 
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (TextUtils.isEmpty(phone.getText().toString())) {
+                if (TextUtils.isEmpty(age.getText().toString())) {
                     Snackbar.make(root, "Add your phone number", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                                 user.setEmail(email.getText().toString());
                                 user.setName(name.getText().toString());
                                 user.setPass(pass.getText().toString());
-                                user.setPhone(phone.getText().toString());
+                                user.setAge(age.getText().toString());
 
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(user)
