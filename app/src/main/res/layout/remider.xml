@@ -21,7 +21,9 @@
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="300dp"
-        android:layout_height="342dp" />
+        android:layout_height="342dp"
+        android:headerBackground="@color/pill_diary_color"
+        android:numbersSelectorColor="@color/pill_diary_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,12 +43,12 @@
 
         <Button
             android:id="@+id/cancelBtn"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancle"
-            android:textColor="@color/white"
             android:backgroundTint="@color/grey"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="cancel"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

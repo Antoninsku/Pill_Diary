@@ -193,12 +193,12 @@ public class MedicineActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 users.child("list").child(index).removeValue(new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(MedicineActivity.this, "Delete Successfully!", Toast.LENGTH_SHORT).show();
-                                medicineAdapter.notifyDataSetChanged();
-                            }
-                        });
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(MedicineActivity.this, "Delete Successfully!", Toast.LENGTH_SHORT).show();
+                        medicineAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

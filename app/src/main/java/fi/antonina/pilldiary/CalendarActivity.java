@@ -35,9 +35,9 @@ import java.util.Locale;
 public class CalendarActivity extends AppCompatActivity {
 
 
-    final List<String> pinkDateList = new ArrayList<String>();
+    final List<String> dateList = new ArrayList<String>();
     final String DATE_FORMAT = "dd-MM-yyyy";
-    int pink = 0;
+    int blue = 0;
     MaterialCalendarView calendarView;
     Button remiderButton;
 
@@ -93,14 +93,14 @@ public class CalendarActivity extends AppCompatActivity {
 
                 if(dataSnapshot.child("counterdate").getValue(Integer.class)!=null){
                     dateCounter = dataSnapshot.child("counterdate").getValue(Integer.class);
-                    pinkDateList.clear();
+                    dateList.clear();
                     for(DataSnapshot ds : dataSnapshot.child("dates").getChildren()) {
                         String date =ds.getValue(String.class);
-                        pinkDateList.add(date);
+                        dateList.add(date);
                         Log.d("planeta", "onDataChange: " + date);
                     }
                 }
-                setEvent(pinkDateList, pink);
+                setEvent(dateList, blue);
 
                 calendarView.invalidateDecorators();
             }
@@ -200,7 +200,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         }
 
-        if (color == pink) {
+        if (color == blue) {
             setDecor(datesCenter, R.drawable.p_center);
             setDecor(datesLeft, R.drawable.p_left);
             setDecor(datesRight, R.drawable.p_right);
@@ -231,7 +231,4 @@ public class CalendarActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-
 }

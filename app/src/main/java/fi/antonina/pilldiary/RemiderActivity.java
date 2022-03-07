@@ -41,7 +41,7 @@ public class RemiderActivity extends AppCompatActivity implements View.OnClickLi
 
         // getBroadcast (context, requestCode, intent, flags)
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent alarmIntent = PendingIntent.getBroadcast(RemiderActivity.this
-        ,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                ,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
 

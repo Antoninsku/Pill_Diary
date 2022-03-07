@@ -33,6 +33,6 @@ public class EventDecorator implements DayViewDecorator {
       // apply drawable to dayView
       view.setSelectionDrawable(context.getResources().getDrawable(drawable));
       // white text color
-      view.addSpan(new ForegroundColorSpan(Color.WHITE));
+      view.addSpan(new ForegroundColorSpan(Color.BLACK));
    }
 }

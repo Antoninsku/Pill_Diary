@@ -23,16 +23,16 @@
 
 
     <TextView
+        android:id="@+id/all_taken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@drawable/btn_back"
+        android:background="@color/pill_diary_color"
         android:clickable="true"
         android:focusable="true"
         android:padding="20dp"
-        android:id="@+id/all_taken"
-        android:text="All MEDICINE TAKEN"
-        android:textColor="#FFFFFF"
+        android:text="ALL MEDICINES TAKEN"
+        android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

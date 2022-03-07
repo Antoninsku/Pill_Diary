@@ -106,10 +106,5 @@ public class TodayActivity extends AppCompatActivity {
         users.addValueEventListener(postListener);
 
 
-
-
-
     }
 }
-
-
