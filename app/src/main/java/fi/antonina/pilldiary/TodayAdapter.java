@@ -53,15 +53,13 @@ public class TodayAdapter extends BaseAdapter {
         TextView medFeedback = view.findViewById(R.id.medFeedback);
 
         String index = medList.get(i).getIndex();
-
+        // get position of item by i
         medName.setText(medList.get(i).getMedName());
         medCapsule.setText(medList.get(i).getMedAmount());
         medTime.setText(medList.get(i).getMedGetTime());
         medFeedback.setText(medList.get(i).getFeedBack());
 
-        // get position of item by i
 
-        // Delete button click event
 
         return view;
     }

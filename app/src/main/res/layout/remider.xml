@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grey"
-            android:text="cancel"
+            android:text="@string/cancel"
             android:textColor="@color/white" />
 
     </LinearLayout>

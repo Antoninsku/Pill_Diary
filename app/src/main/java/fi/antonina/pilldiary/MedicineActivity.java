@@ -50,7 +50,7 @@ public class MedicineActivity extends AppCompatActivity {
     ArrayList<MedicineType> medArrayList;
     MedicineAdapter medicineAdapter;
     long counter = 0;
-    Button logoutteri;
+
     String i;
 
     @Override
@@ -62,7 +62,6 @@ public class MedicineActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         users = db.getReference("Users").child(auth.getUid());
-        logoutteri = findViewById(R.id.buttonLog);
 
 
         navigationView = findViewById(R.id.bottom_nav);
@@ -101,34 +100,6 @@ public class MedicineActivity extends AppCompatActivity {
         medListView.setAdapter(medicineAdapter);
         addNewMedicineButton = findViewById(R.id.addMedicineButton);
 
-        //Väliaikainen, poistetaan kun kaikki on kirjautunut ulos
-
-        logoutteri.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MedicineActivity.this);
-                builder.setMessage("do you want to log out ?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                onDestroy();
-                                Intent intent = new Intent(MedicineActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                FirebaseAuth.getInstance().signOut();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.setTitle("Please Confirm");
-                alert.show();
-            }
-        });
 
         //When Add New Medicine is clicked, a dialog will appear
         addNewMedicineButton.setOnClickListener(new View.OnClickListener() {

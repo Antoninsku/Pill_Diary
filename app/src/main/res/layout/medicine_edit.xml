@@ -29,11 +29,12 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_marginTop="20dp">
+
         <TextView
             android:id="@+id/medGetNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Med_Name_Questions"
+            android:text="@string/Name_of_Medicine"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -69,10 +70,10 @@
             android:id="@+id/getMedTimeTextView"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@string/Med_Time_question"
+            android:layout_marginTop="10dp"
+            android:text="When should take the medicine?"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"/>
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTexEditTime"

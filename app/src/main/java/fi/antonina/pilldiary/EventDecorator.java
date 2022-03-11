@@ -11,6 +11,7 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 import java.util.HashSet;
 import java.util.List;
+// Decorates calendar
 
 public class EventDecorator implements DayViewDecorator {
    Context context;
@@ -32,7 +33,7 @@ public class EventDecorator implements DayViewDecorator {
    public void decorate(DayViewFacade view) {
       // apply drawable to dayView
       view.setSelectionDrawable(context.getResources().getDrawable(drawable));
-      // white text color
+
       view.addSpan(new ForegroundColorSpan(Color.BLACK));
    }
 }

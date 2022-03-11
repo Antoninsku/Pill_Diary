@@ -33,19 +33,19 @@
         app:layout_constraintVertical_bias="0.145">
 
 
-
     </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
     <Button
         android:id="@+id/remiderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
-        android:text="@string/Set_reminder"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="176dp"
         android:backgroundTint="@color/pill_diary_color"
+        android:text="@string/Set_reminder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

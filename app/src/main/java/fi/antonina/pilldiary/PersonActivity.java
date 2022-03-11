@@ -38,7 +38,6 @@ public class PersonActivity extends AppCompatActivity {
     ImageButton logOut;
     AlertDialog dialog;
 
-    //Anh
     FirebaseAuth auth;
     FirebaseDatabase db;
     DatabaseReference users;
@@ -49,7 +48,6 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person);
 
-        //Anh
         FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
@@ -198,8 +196,11 @@ public class PersonActivity extends AppCompatActivity {
               //  Kaksi alempaa riviä vanha koodi
                  String newName = name.getText().toString().trim();
                  userName.setText(newName.toUpperCase());
-                 users.child("name").setValue(userName.getText().toString()) ;
                  Toast.makeText(PersonActivity.this, "This data has been updated", Toast.LENGTH_SHORT).show();
+
+                 //Adds changes to database
+                 users.child("name").setValue(userName.getText().toString()) ;
+
 
             }
         });
@@ -228,12 +229,11 @@ public class PersonActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String newAge = age.getText().toString().toUpperCase(Locale.ROOT);
                 userAge.setText(newAge);
-                //mitä tarkoittaa
+
               //  dialogInterface.cancel();
                 Toast.makeText(PersonActivity.this, "This data has been updated", Toast.LENGTH_SHORT).show();
-
+                //Adds changes to database
                 users.child("age").setValue(userAge.getText().toString());
-
             }
         });
         dialog.show();
@@ -241,5 +241,3 @@ public class PersonActivity extends AppCompatActivity {
     }
 
 }
-
-

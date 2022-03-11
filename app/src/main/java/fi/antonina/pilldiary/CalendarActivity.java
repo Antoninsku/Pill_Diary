@@ -58,26 +58,15 @@ public class CalendarActivity extends AppCompatActivity {
 
         calendarView = findViewById(R.id.calendarView);
         calendarView.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
-
+        // Calendar set for a year
         final LocalDate min = getLocalDate("01-01-2022");
-        final LocalDate max = getLocalDate("30-12-2022");
+        final LocalDate max = getLocalDate("31-12-2022");
 
         calendarView.state().edit().setMinimumDate(min).setMaximumDate(max).commit();
-
-
-
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
 
-                /*users.child("dates").child((dateCounter+1)+"").setValue(calendarDay.getDay()+"-"+calendarDay.getMonth()+"-"+calendarDay.getYear()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            users.child("counterdate").setValue(dateCounter+1);
-                        }
-                    }
-                });*/
                 Intent intent = new Intent(CalendarActivity.this, TodayActivity.class);
                 intent.putExtra("datePicked", calendarDay.getDay()+"-"+calendarDay.getMonth()+"-"+calendarDay.getYear());
                 intent.putExtra("counter", dateCounter+1);
@@ -101,7 +90,6 @@ public class CalendarActivity extends AppCompatActivity {
                     }
                 }
                 setEvent(dateList, blue);
-
                 calendarView.invalidateDecorators();
             }
 
@@ -111,11 +99,6 @@ public class CalendarActivity extends AppCompatActivity {
             }
         };
         users.addValueEventListener(postListener);
-
-
-
-
-
 
 
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav);
@@ -155,6 +138,7 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    // Method for a defined calendar decoration
     void setEvent(List<String> dateList, int color) {
 
         List<LocalDate> localDateList = new ArrayList<>();
@@ -166,7 +150,6 @@ public class CalendarActivity extends AppCompatActivity {
             }
         }
 
-
         List<CalendarDay> datesLeft = new ArrayList<>();
         List<CalendarDay> datesCenter = new ArrayList<>();
         List<CalendarDay> datesRight = new ArrayList<>();
@@ -174,13 +157,10 @@ public class CalendarActivity extends AppCompatActivity {
 
 
         for (LocalDate localDate : localDateList) {
-
             boolean right = false;
             boolean left = false;
 
             for (LocalDate day1 : localDateList) {
-
-
                 if (localDate.isEqual(day1.plusDays(1))) {
                     left = true;
                 }

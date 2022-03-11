@@ -34,6 +34,7 @@ public class TodayActivity extends AppCompatActivity {
     TodayAdapter medicineAdapter;
     TextView all_taken;
     long counter = 0, counter2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class TodayActivity extends AppCompatActivity {
         medListView.setAdapter(medicineAdapter);
         all_taken = findViewById(R.id.all_taken);
 
+        //Checks the medicins taken and return back to Calendar activity, where the decoration is set
         all_taken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +75,8 @@ public class TodayActivity extends AppCompatActivity {
             }
         });
 
-
+        // Gets the medicine info from realtime database, adds the info to medicineAdapter
+        //Can be shown at the medlist where you can go from calendar
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,7 +107,6 @@ public class TodayActivity extends AppCompatActivity {
             }
         };
         users.addValueEventListener(postListener);
-
 
     }
 }
